@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %} Поиск {% endblock %}
+
+{% block content %}
+
+{% if  searched_product_from_input %}
+
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-md-8 order-md-2 col-lg-9">
+                <div class="container-fluid">
+                    <div class="row   mb-5">
+                        <div class="col-12">
+                            <div class="btn-group float-md-right ml-3">
+                                <button type="button" class="btn btn-lg btn-light"><span class="fa fa-arrow-left"></span>
+                                </button>
+                                <button type="button" class="btn btn-lg btn-light"><span class="fa fa-arrow-right"></span>
+                                </button>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        {% for product in searched_products %}
+                        <div class="col-6 col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-0">
+                                {% if product.image %}
+                                <div class="card-img-top">
+                                    <img src="{{product.image.url}}" class="img-fluid mx-auto d-block" height="300px"
+                                         width="100%" alt="Card image cap">
+                                </div>
+                                {% else %}
+                                <div class="card-img-top">
+                                    <img src="https://via.placeholder.com/240x240/5fa9f8/efefef"
+                                         class="img-fluid mx-auto d-block" alt="Card image cap">
+                                </div>
+                                {% endif %}
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">
+                                        <a href="{% url 'detail' pk=product.pk  %}"
+                                           class=" font-weight-bold text-dark text-uppercase small"> {{product.name}}</a>
+                                    </h4>
+                                    <h5 class="card-price small text-warning">
+                                        <i>
+                                            <s></s> {{product.price}} сом</i>
+                                        <i></i>
+                                    </h5>
+                                    <a href="{% url 'addToCard' pk=product.pk %}" class="btn btn-primary ">Добавить в
+                                        корзину</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 order-md-1 col-lg-3 sidebar-filter">
+                <h3> Вы искали {{searched_product_from_input}}</h3>
+
+                <h3 class="mt-0 mb-5">Showing <span class="text-primary">{{searched_products.count}}</span> Products</h3>
+                <h6 class="text-uppercase font-weight-bold mb-3">Категории</h6>
+                <div class="list-group">
+                    <a href="{% url 'homepage' %}" class="list-group-item list-group-item-action btn btn-outline-primary d-flex justify-content-between align-items-center">
+                        Все Категории
+                        <span class="badge bg-primary rounded-pill">{{all_products.count}}</span>
+                    </a>
+                </div>
+                {% for category in categories %}
+                <div class="list-group">
+                    <a href="{% url 'pr_by_category' pk=category.pk %}" class="list-group-item list-group-item-action btn btn-outline-primary d-flex justify-content-between align-items-center">
+                        {{category.name}}
+                        <span class="badge bg-primary rounded-pill">{{category.products_count}}</span>
+                    </a>
+                </div>
+                {% endfor %}
+    
+                <input id="ex2" type="text" class="slider " value="50,150" data-slider-min="10" data-slider-max="200"
+                       data-slider-step="5" data-slider-value="[50,150]" data-value="50,150" style="display: none;">
+                <div class="divider mt-5 mb-5 border-bottom border-secondary"></div>
+                <a href="{% url 'homepage'  %}" class="btn btn-lg btn-block btn-primary mt-5">Update Results</a>
+            </div>
+    
+        </div>
+    </div>
+
+
+
+  {% endif %}
+
+{% endblock %}

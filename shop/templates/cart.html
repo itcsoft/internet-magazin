@@ -63,9 +63,54 @@
     </div>
     <div class="row mt-4 d-flex align-items-center">
         <div class="col-sm-6 order-md-2 text-right">
-            <a href="catalog.html" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
+            <!-- <a href="catalog.html" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a> -->
+
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Оформить заказ
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Для заказа пишите свои контактные данные</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+        <div class="modal-body">
+          <form action="{% url 'order' %}" method="POST">
+            {% csrf_token %}
+            <input class="form-control form-control-sm" type="text" placeholder="Введите ваше имя" aria-label=".form-control-sm example" name="c_name">
+            <br>
+            <input class="form-control form-control-sm" type="text" placeholder="Введите вашу фамилию" aria-label=".form-control-sm example" name="c_lname">
+            <br>
+            <input class="form-control form-control-sm" type="text" placeholder="Введите ваш номер телефона" aria-label=".form-control-sm example" name="c_phnumber">
+            <br>
+            <input class="form-control form-control-sm" type="text" placeholder="Введите ваш адрес" aria-label=".form-control-sm example" name="c_address">
+            <br>
+            <input class="form-control form-control-sm" type="email" placeholder="Введите вашу почту" aria-label=".form-control-sm example" name="c_email">
+            <br>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+ {% if messages %}
+ {% for message in messages %}
+ <div class="alert alert-{{message.extra_tags}} alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+{% endif %}
+  <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
             <a href="{% url 'homepage' %}">
                 <i class="fas fa-arrow-left mr-2"></i> Продолжить покупки</a>
         </div>

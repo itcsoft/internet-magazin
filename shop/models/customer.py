@@ -5,11 +5,14 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
+    address = models.CharField(max_length=255, blank=True, null=True)
     password = models.CharField(max_length=100)
 
     def register(self): # сохранить данные
         self.save()
     
+    def __str__(self):
+        return self.first_name
 
     @staticmethod
     def get_customer_by_email(email):
